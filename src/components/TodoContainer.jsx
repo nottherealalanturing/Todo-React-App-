@@ -1,6 +1,7 @@
 import React from 'react';
-import Header from './Header.js';
-import TodoList from './TodoList.js';
+import Header from './Header.jsx';
+import TodoList from './TodoList.jsx';
+import InputTodo from './InputTodo.jsx';
 
 class TodoContainer extends React.Component {
   constructor(props) {
@@ -25,6 +26,11 @@ class TodoContainer extends React.Component {
       ],
     };
   }
+
+  addTodoItem = (title) => {
+    const newTodo = { id: 4, title: title, completed: false };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
 
   handleChange = (id) => {
     this.setState((prevState) => ({
@@ -54,6 +60,7 @@ class TodoContainer extends React.Component {
     return (
       <React.Fragment>
         <Header />
+        <InputTodo addTodoProps={this.addTodoItem} />
         <TodoList
           todoList={this.state.todos}
           handleChangeProps={this.handleChange}
