@@ -1,9 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import TodoContainer from './components/TodoContainer';
+import { Todo } from './pages';
 
 function App() {
-  return <TodoContainer />;
+  return (
+    <>
+      <Todo />
+    </>
+  );
 }
 
 export default App;
