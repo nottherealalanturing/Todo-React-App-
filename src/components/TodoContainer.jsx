@@ -34,7 +34,14 @@ class TodoContainer extends React.Component {
   };
 
   updateItem = (updatedTitle, id) => {
-    console.log(updatedTitle, id);
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.title = updatedTitle;
+        }
+        return todo;
+      }),
+    });
   };
 
   handleChange = (id) => {
