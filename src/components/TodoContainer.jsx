@@ -1,0 +1,107 @@
+import React from 'react';
+import Header from './Header.jsx';
+import TodoList from './TodoList.jsx';
+import InputTodo from './InputTodo.jsx';
+import { v4 as uuidv4 } from 'uuid';
+import { Route, Switch } from 'react-router-dom';
+
+class TodoContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [
+        {
+          id: uuidv4(),
+          title: 'Setup development environment',
+          completed: true,
+        },
+        {
+          id: uuidv4(),
+          title: 'Develop website and add content',
+          completed: true,
+        },
+        {
+          id: uuidv4(),
+          title: 'Deploy to live server',
+          completed: false,
+        },
+      ],
+    };
+  }
+
+  addTodoItem = (title) => {
+    const newTodo = { id: 4, title: title, completed: false };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
+
+  updateItem = (updatedTitle, id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.title = updatedTitle;
+        }
+        return todo;
+      }),
+    });
+  };
+
+  handleChange = (id) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      }),
+    }));
+  };
+
+  deleteItem = (id) => {
+    this.setState({
+      todos: [
+        ...this.state.todos.filter((todo) => {
+          return todo.id !== id;
+        }),
+      ],
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos !== this.state.todos) {
+      const temp = JSON.stringify(this.state.todos);
+      localStorage.setItem('todos', temp);
+    }
+  }
+
+  componentDidMount() {
+    const temp = localStorage.getItem('todos');
+    const loadedTodos = JSON.parse(temp);
+    if (loadedTodos) {
+      this.setState({
+        todos: loadedTodos,
+      });
+    }
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <div className="inner">
+          <Header />
+          <InputTodo addTodoProps={this.addTodoItem} />
+          <TodoList
+            todoList={this.state.todos}
+            handleChangeProps={this.handleChange}
+            deleteItemProps={this.deleteItem}
+            updateItem={this.updateItem}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default TodoContainer;
