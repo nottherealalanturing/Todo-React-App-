@@ -3,7 +3,7 @@ import TodoItem from './TodoItem.jsx';
 
 class TodoList extends React.Component {
   render() {
-    const { handleChangeProps, deleteItemProps } = this.props;
+    const { handleChangeProps, deleteItemProps, updateItem } = this.props;
     return (
       <ul>
         {this.props.todoList.map((todo) => (
@@ -12,6 +12,7 @@ class TodoList extends React.Component {
             key={todo.id}
             handleChangeProps={handleChangeProps}
             deleteItemProps={deleteItemProps}
+            updateItemProps={updateItem}
           />
         ))}
       </ul>
