@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
 
 class InputTodo extends React.Component {
   constructor(props) {
@@ -31,7 +32,9 @@ class InputTodo extends React.Component {
           name="title"
           className="input-text"
         />
-        <button className="input-submit">Submit</button>
+        <button className="input-submit">
+          <FaPlusCircle />
+        </button>
       </form>
     );
   }
